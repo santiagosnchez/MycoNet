@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 import subprocess
+import shutil
 
 import pytest
 
@@ -45,3 +46,21 @@ def trained_model_dir(tmp_path_factory):
     ]
     subprocess.run(cmd, check=True)
     return str(expdir)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _cleanup_small_tmp_dirs(tmp_path_factory):
+    """Ensure any `small_test*` dirs created under pytest basetemp are removed.
+
+    Some tests or external tools may create temporary directories named
+    `small_test*` under the pytest base temp. This autouse fixture removes
+    them at session teardown to avoid leftover clutter.
+    """
+    yield
+    try:
+        base = Path(tmp_path_factory.getbasetemp())
+        for p in base.iterdir():
+            if p.name.startswith("small_test"):
+                shutil.rmtree(p, ignore_errors=True)
+    except Exception:
+        pass
