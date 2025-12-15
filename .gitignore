@@ -1,14 +1,23 @@
+# other files
+.DS_Store
+*.log
+
+# IDEs and editors
+.vscode/
+.idea/
+node_modules/
+
+# build files
+dist/
+build/
+
+# python cache
+.pytest_cache/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.swp
-*.swo
-.DS_Store
+
+# local env
+.venv/
 .env
-.vscode/
-.idea/
-node_modules/
-dist/
-build/
-*.log
