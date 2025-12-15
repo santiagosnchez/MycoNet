@@ -39,7 +39,14 @@ def test_load_or_prepare_data_with_existing_matrices(tmp_path):
     np.save(inputs / "labels_matrix.npy", labels)
     (inputs / "vocab_size.txt").write_text("100\n")
 
-    X_train, X_test, y_train, y_test, vocab_size = mdata.load_or_prepare_data(str(sample := tmp_path / "unused.fasta"), str(exp), kmer=4, maxseq=1500, minseq=10, test_size=0.5)
+    X_train, X_test, y_train, y_test, vocab_size = mdata.load_or_prepare_data(
+        str(sample := tmp_path / "unused.fasta"),
+        str(exp),
+        kmer=4,
+        maxseq=1500,
+        minseq=10,
+        test_size=0.5,
+    )
     assert vocab_size == 100
     assert X_train.shape[1] == 10
     assert y_train.ndim == 1

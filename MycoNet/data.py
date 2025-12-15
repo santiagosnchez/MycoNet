@@ -4,6 +4,7 @@ Contains functions to read input files, preprocess sequences and labels,
 and prepare train/test splits. These are imported by the CLI training
 script to keep top-level code compact and testable.
 """
+
 from typing import List, Tuple
 import os
 import logging
@@ -51,7 +52,9 @@ def ensure_dirs(name: str):
     os.makedirs(os.path.join(name, "training"), exist_ok=True)
 
 
-def load_or_prepare_data(fasta_db: str, name: str, kmer: int, maxseq: int, minseq: int, test_size: float):
+def load_or_prepare_data(
+    fasta_db: str, name: str, kmer: int, maxseq: int, minseq: int, test_size: float
+):
     """Return X_train, X_test, y_train, y_test, vocab_size.
 
     This function will reuse saved numpy files under `name/inputs/` if present,
@@ -89,7 +92,9 @@ def load_or_prepare_data(fasta_db: str, name: str, kmer: int, maxseq: int, minse
         with open(os.path.join(inputs_dir, "vocab_size.txt"), "w") as o:
             o.write(str(vocab_size) + "\n")
 
-    X_train, X_test, y_train, y_test = split_train_test(X, labels_idx, test_size=test_size)
+    X_train, X_test, y_train, y_test = split_train_test(
+        X, labels_idx, test_size=test_size
+    )
     np.save(os.path.join(inputs_dir, "X_train.npy"), X_train)
     np.save(os.path.join(inputs_dir, "X_test.npy"), X_test)
     np.save(os.path.join(inputs_dir, "y_train.npy"), y_train)
