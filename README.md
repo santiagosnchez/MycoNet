@@ -57,6 +57,6 @@ Notes
 - Tested on Python 3.12 with TensorFlow/Keras; GPU usage is optional and
 	TensorFlow will try to enable memory growth when GPUs are available.
 
-If you'd like, I can also:
-- add a `requirements.txt` or `pyproject.toml` snippet,
-- open a small PR with these documentation changes.
+**Performance** on simulated data:
+
+<img src="simulations_training_testing_accuracy.png" alt="Performance" width="600"/>
