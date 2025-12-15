@@ -59,4 +59,4 @@ Notes
 
 **Performance** on simulated data:
 
-<img src="simulations_training_testing_accuracy.png" alt="Performance" width="600"/>
+<img src="images/simulations_training_testing_accuracy.png" alt="Performance" width="600"/>
