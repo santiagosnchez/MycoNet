@@ -1,4 +1,5 @@
 import numpy as np
+import logging
 
 # from keras.preprocessing.text import Tokenizer
 # from sklearn.model_selection import train_test_split
@@ -30,15 +31,15 @@ def get_labels(data, flatten):
 
 def get_recoded_sequences(data, pad, longest, kmer):
     if kmer:
-        print("using a kmer approach, kmer size:", kmer, "bp")
+        logging.info("using a kmer approach, kmer size: %d bp", kmer)
         seqs = [resolve_amb(s) for h, s in data]
-        print("searching for kmers in sequence data")
+        logging.info("searching for kmers in sequence data")
         exp_kmer_key = all_kmers_dict(kmer)
         kmer_key = find_all_kmers(seqs, kmer)
         X, missing = kmer_to_int(seqs, kmer, exp_kmer_key, pad, longest)
-        print("missing kmers:", len(missing))
-        print("expected kmer dict:", len(exp_kmer_key))
-        print("observed kmer dict:", len(kmer_key))
+        logging.info("missing kmers: %d", len(missing))
+        logging.info("expected kmer dict: %d", len(exp_kmer_key))
+        logging.info("observed kmer dict: %d", len(kmer_key))
         return X, len(exp_kmer_key)
     else:
         X = np.array([np.array(flatten_DNA(s)) for h, s in data])
