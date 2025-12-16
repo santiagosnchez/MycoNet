@@ -9,13 +9,21 @@ from typing import List, Tuple
 import os
 import logging
 import numpy as np
+import gzip
 
 from MycoNet.recode import get_recoded_sequences
 from MycoNet.make_model import split_train_test
 
 
 def split_data(fasta: str) -> List[Tuple[str, str]]:
-    with open(fasta) as f:
+    # transparently handle gzipped FASTA files
+    if str(fasta).endswith(".gz"):
+        opener = gzip.open
+        mode = "rt"
+    else:
+        opener = open
+        mode = "r"
+    with opener(fasta, mode) as f:
         data = f.read().splitlines()
     idx = iter(range(len(data)))
     return [[data[i], data[j].upper()] for i, j in zip(idx, idx)]
